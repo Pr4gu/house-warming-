@@ -1,0 +1,207 @@
+:root {
+  --bg-cream: #FBF5EC;
+  --text-red: #8B1A1A;
+  --text-brown: #3D1A0A;
+  --btn-bg: #5C2A0E;
+  /* Internal design width */
+  --design-w: 720px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  width: 100%;
+  height: 100%;
+  background: var(--bg-cream);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  touch-action: manipulation;
+}
+
+/* ─── LOADING SCREEN ─────────────────────────────────── */
+#loading-screen {
+  position: fixed;
+  inset: 0;
+  background: var(--bg-cream);
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.6s ease;
+}
+@keyframes ganeshaPulse {
+  0%, 100% { transform: scale(1.0); opacity: 0.85; }
+  50%       { transform: scale(1.08); opacity: 1; }
+}
+#loading-ganesha {
+  animation: ganeshaPulse 1.8s ease-in-out infinite;
+  margin-bottom: 16px;
+}
+#loading-text {
+  font-family: 'Kaushan Script', cursive;
+  font-size: 18px;
+  color: var(--text-brown);
+}
+
+/* ─── VIDEO LAYER (true fullscreen, outside canvas) ──── */
+#video-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  background: var(--bg-cream);
+  display: none; /* shown by JS */
+}
+#vid1, #vid2 {
+  position: absolute;
+  top: 5%;
+  height: 90%;
+  width: 100%;
+  object-fit: cover;
+}
+#vid1 { opacity: 1; }
+#vid2 { opacity: 0; }
+
+#tap-hint {
+  position: absolute;
+  top: 35%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(255,255,255,0.18);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255,0.35);
+  border-radius: 999px;
+  padding: 10px 28px;
+  color: #fff;
+  font-family: sans-serif;
+  font-weight: 300;
+  font-size: 15px;
+  letter-spacing: 0.5px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+  white-space: nowrap;
+  z-index: 10;
+}
+
+/* ─── SCROLL WRAPPER ─────────────────────────────────── */
+/* This element's height = total scroll distance */
+#scroll-wrapper {
+  position: relative;
+  width: 100%;
+  /* Height set by JS based on scale */
+}
+
+/* ─── STICKY CANVAS ──────────────────────────────────── */
+/* Sticks in viewport, canvas content scrolls via JS progress */
+#sticky-canvas {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  height: 100svh; /* full phone screen height */
+  overflow: hidden;
+  display: none; /* shown after video phase */
+}
+
+/* Internal 720px canvas, scaled and centered */
+#sticky-canvas > * {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 720px;
+  transform-origin: top center;
+  /* scale and translation applied via JS */
+}
+
+/* ─── LAYER Z-INDEX ──────────────────────────────────── */
+#lower-door-canvas  { z-index: 1; height: 1284px; } /* full canvas height */
+#upper-gif-canvas   { z-index: 2; height: 544px; opacity: 0; }
+#text-layer         { z-index: 3; height: 1284px; pointer-events: none; }
+
+/* ─── TEXT LAYER LAYOUT ──────────────────────────────── */
+#text-layer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 64px;
+}
+
+#block-header, #block-date-time, #block-venue {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  padding: 0 64px;
+  text-align: center;
+}
+
+#block-header {
+  top: 279px;
+}
+
+#block-date-time {
+  top: 600px;
+}
+
+#block-venue {
+  top: 690px;
+}
+
+.scroll-float, .reveal-el {
+  opacity: 0; /* Anti-flash native protection */
+}
+
+/* ─── TYPOGRAPHY ─────────────────────────────────────── */
+.ks-13  { font-family: 'Kaushan Script', cursive; font-size: 24px; color: var(--text-brown); }
+.cg-36  { font-family: 'Cormorant Garamond', serif; font-weight: 700; font-size: 52px; color: var(--text-red); letter-spacing: 4px; line-height: 1.1; }
+.ks-24  { font-family: 'Kaushan Script', cursive; font-size: 42px; color: var(--text-red); }
+.ks-22  { font-family: 'Kaushan Script', cursive; font-size: 38px; color: var(--text-red); }
+.ks-15  { font-family: 'Kaushan Script', cursive; font-size: 26px; color: var(--text-brown); line-height: 1.7; }
+
+.ks-date     { font-family: 'Style Script', cursive; font-size: 56px; color: var(--text-red); line-height: 1.2; }
+.ks-time     { font-family: 'Style Script', cursive; font-size: 40px; color: var(--text-brown); }
+.cg-venue    { font-family: 'Style Script', cursive; font-size: 60px; color: var(--text-red); }
+.ks-location { font-family: 'Style Script', cursive; font-size: 32px; color: var(--text-brown); }
+
+.mt-10 { margin-top: 16px; }
+.mt-15 { margin-top: 24px; }
+.mt-20 { margin-top: 36px; }
+
+.line-divider {
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+  display: block;
+}
+
+/* scroll-float chars */
+.scroll-float-wrap { overflow: hidden; }
+.scroll-float { display: block; }
+.char { display: inline-block; will-change: transform, opacity; }
+
+/* reveal-el: opacity controlled by GSAP */
+.reveal-el { opacity: 0; }
+
+/* ─── LOCATION BUTTON ────────────────────────────────── */
+.location-btn {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  border: 0;
+  outline: none;
+  cursor: pointer;
+  pointer-events: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--btn-bg);
+  margin: 32px auto 0;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow:
+    inset 0 0.5rem 1.5rem rgba(255,255,255,0.28),
+    inset 0 -0.2rem 0.5rem rgba(0,0,0,0.65),
+    inset 0 -0.7rem 1.5rem rgba(255,255,255,0.45),
+    0 1.5rem 2rem -1rem rgba(0,0,0,0.75);
+}
+.location-btn:active { transform: translateY(6px); }
+.location-btn svg { width: 48px; height: 48px; }

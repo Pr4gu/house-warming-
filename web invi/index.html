@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>House Warming - Mr. & Mrs. Siva Babu</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@700&family=Kaushan+Script&family=Style+Script&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+</head>
+<body>
+
+  <!-- LOADING SCREEN -->
+  <div id="loading-screen">
+    <div id="loading-ganesha">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="90" height="90">
+        <text x="50%" y="62%" font-size="52" text-anchor="middle" fill="#8B1A1A" font-family="serif">ॐ</text>
+      </svg>
+    </div>
+    <div id="loading-text">Loading… <span id="loading-progress">0%</span></div>
+  </div>
+
+  <!-- FULLSCREEN VIDEO LAYER (outside canvas, true fullscreen) -->
+  <div id="video-layer">
+    <video id="vid1" src="../compos/main intro .mp4" playsinline muted></video>
+    <video id="vid2" src="../compos/camera glide.mp4" playsinline muted></video>
+    <div id="tap-hint">Tap to continue</div>
+  </div>
+
+  <!-- SCROLL WRAPPER — drives the scroll height -->
+  <div id="scroll-wrapper">
+
+    <!-- STICKY CANVAS — stays in view as user scrolls -->
+    <div id="sticky-canvas">
+
+      <!-- Layer 1: Lower door frames (canvas) -->
+      <canvas id="lower-door-canvas" width="720" height="1284"></canvas>
+
+      <!-- Layer 2: Upper GIF (canvas, play-once) -->
+      <canvas id="upper-gif-canvas" width="720" height="544"></canvas>
+
+      <!-- Layer 3: All text — always on top -->
+      <div id="text-layer">
+
+        <div id="block-header">
+          <div class="ks-13">|| Shree Ganeshay Namah ||</div>
+          <div class="cg-36 mt-20">HOUSE WARMING</div>
+          <div class="ks-24">Ceremony</div>
+          <div class="ks-22 mt-15">Mr. &amp; Mrs. Siva Babu</div>
+          <div class="ks-15 mt-15">
+            Cordially invite you &amp; your family to grace<br>
+            the occasion of House Warming of our New Home
+          </div>
+          <img class="line-divider mt-20" src="../compos/Line.png" alt="">
+        </div>
+
+        <div id="block-date-time">
+          <div class="scroll-float-wrap">
+            <h2 class="scroll-float ks-date">Monday, 27th April, 2026</h2>
+          </div>
+          <div class="scroll-float-wrap mt-10">
+            <h2 class="scroll-float ks-time">Time : 7 AM onwards</h2>
+          </div>
+          <img class="line-divider reveal-el mt-20" src="../compos/Line.png" alt="">
+        </div>
+
+        <div id="block-venue">
+          <div class="scroll-float-wrap">
+            <h2 class="scroll-float cg-venue">Venue</h2>
+          </div>
+          <div class="ks-location reveal-el mt-10">Tap the pin below for location</div>
+          <button class="location-btn reveal-el mt-20"
+            onclick="window.location.href='https://maps.app.goo.gl/85TEG8Rx3KRYaXNs9'">
+            <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24"
+              fill="none" stroke="rgba(255,255,255,0.9)" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
+              <circle cx="12" cy="9" r="2.5"/>
+            </svg>
+          </button>
+        </div>
+
+      </div><!-- /text-layer -->
+    </div><!-- /sticky-canvas -->
+
+  </div><!-- /scroll-wrapper -->
+
+  <script src="app.js"></script>
+</body>
+</html>
